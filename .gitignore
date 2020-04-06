@@ -268,5 +268,8 @@ __pycache__/
 *.tfstate
 *.tfstate.*
 
+# developer tfvars file
+dev.tfvars
+
 # Crash log files
 crash.log
