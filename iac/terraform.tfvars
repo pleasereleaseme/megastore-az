@@ -1,2 +1,2 @@
-location = "westus"
-projectname  = "megastoretemp"
+location    = "westus"
+projectname = "megastoretemp"
