@@ -8,7 +8,7 @@ variables:
 pool:
   name: local
   demands:
-  - agent.os -equals windows-10
+  - agent.name -equals windows-10
 
 stages:
 - stage: provision
