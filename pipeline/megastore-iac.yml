@@ -42,8 +42,8 @@ stages:
       workingDirectory: $(Pipeline.Workspace)/iac
 
     - script: |
-        terraform plan -var projectname=$(AppName)
-        terraform apply -var projectname=$(AppName) --auto-approve
+        terraform plan -var projectname=$(ProjectName)
+        terraform apply -var projectname=$(ProjectName) --auto-approve
       displayName: 'terraform plan and apply'
       workingDirectory: $(Pipeline.Workspace)/iac
       env:
@@ -51,10 +51,10 @@ stages:
         ARM_CLIENT_SECRET: $(azure_client_secret)
         ARM_SUBSCRIPTION_ID: $(azure_subscription_id)
         ARM_TENANT_ID: $(azure_tenant_id)
-        AKS_CLIENT_ID:  $(aks_client_id)
-        AKS_CLIENT_SECRET:  $(aks_client_secret)
+        aks_client_id:  $(aks_client_id)
+        aks_client_secret:  $(aks_client_secret)
 
-    # - script: terraform destroy -var appname=$(AppName) --auto-approve
+    # - script: terraform destroy -var projectname=$(ProjectName) --auto-approve
     #   displayName: 'terraform destroy'
     #   workingDirectory: $(Pipeline.Workspace)/iac
     #   env:
