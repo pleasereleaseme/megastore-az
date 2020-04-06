@@ -262,7 +262,9 @@ __pycache__/
 **/db-credentials.env
 
 # Local .terraform directories
-**/.terraform/**
+**/.terraform/*
+lock.json
+terraform*.exe
 
 # .tfstate files
 *.tfstate
