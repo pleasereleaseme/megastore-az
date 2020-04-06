@@ -263,8 +263,6 @@ __pycache__/
 
 # Local .terraform directories
 **/.terraform/*
-**/lock.json
-**/terraform*.exe
 
 # .tfstate files
 *.tfstate
