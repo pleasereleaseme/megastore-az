@@ -18,7 +18,8 @@ stages:
     workspace:
       clean: all
     steps:
-    - template: output-variable-values.yml
+    - script: 'cmd /k set'
+      displayName: 'output environemt variables'
 
     - publish: $(System.DefaultWorkingDirectory)/iac
       artifact: iac
@@ -41,8 +42,8 @@ stages:
       workingDirectory: $(Pipeline.Workspace)/iac
 
     - script: |
-        terraform plan -var appname=$(AppName)
-        terraform apply -var appname=$(AppName) --auto-approve
+        terraform plan -var projectname=$(AppName)
+        terraform apply -var projectname=$(AppName) --auto-approve
       displayName: 'terraform plan and apply'
       workingDirectory: $(Pipeline.Workspace)/iac
       env:
