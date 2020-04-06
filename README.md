@@ -1,1 +1,1 @@
-# megastore-az
+This is the repo which accompanies my blog series [Deploy a Dockerized Application to Azure Kubernetes Service using Azure YAML Pipelines](?????????)

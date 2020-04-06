@@ -1,2 +1,1 @@
 location    = "westus"
-projectname = "megastoretemp"
