@@ -54,3 +54,6 @@ stages:
         TF_VAR_project_name: $(project_name)
         TF_VAR_aks_client_id:  $(aks_client_id)
         TF_VAR_aks_client_secret:  $(aks_client_secret)
+        TF_VAR_asql_administrator_login_name: $(asql_administrator_login_name)
+        TF_VAR_asql_administrator_login_password: $(asql_administrator_login_password)
+        TF_VAR_asql_local_client_ip_address: $(asql_local_client_ip_address)
