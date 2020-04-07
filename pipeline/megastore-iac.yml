@@ -30,8 +30,8 @@ stages:
       displayName: 'download iac artefact'
 
     - powershell: New-Item -Path . -Name "backend.tf" -ItemType "file" -Value "terraform {`n  backend `"azurerm`" {}`n}"
-      displayName: 'create file with azurerm backend configuration'
       workingDirectory: $(Pipeline.Workspace)/iac
+      displayName: 'create file with azurerm backend configuration'
 
     - script: terraform init
         --backend-config="storage_account_name=$(backend_storage_account_name)"
