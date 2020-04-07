@@ -1,0 +1,6 @@
+projectname                       = "the_name_for_this_project"
+aks_client_id                     = "service_principal_id"
+aks_client_secret                 = "service_principal_client"
+asql_administrator_login_name     = "admin_name"
+asql_administrator_login_password = "admin_pasword"
+asql_local_client_ip_address      = "local_ip_address"

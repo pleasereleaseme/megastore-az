@@ -1,1 +1,1 @@
-This is the repo which accompanies my blog series [Deploy a Dockerized Application to Azure Kubernetes Service using Azure YAML Pipelines](?????????)
+This is the repo which accompanies my blog series [Deploy a Dockerized Application to Azure Kubernetes Service using Azure YAML Pipelines](https://pleasereleaseme.net/deploy-a-dockerized-application-to-azure-kubernetes-service-using-azure-yaml-pipelines-1-getting-started/)

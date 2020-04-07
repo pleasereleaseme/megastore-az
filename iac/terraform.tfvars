@@ -1,1 +1,1 @@
-location    = "westus"
+location = "westeurope"
