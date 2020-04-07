@@ -1,5 +1,5 @@
 resource "azurerm_sql_server" "asql" {
-  name                         = join("", [var.projectname, "-asql"])
+  name                         = join("", [var.project_name, "-asql"])
   resource_group_name          = azurerm_resource_group.rg.name
   location                     = azurerm_resource_group.rg.location
   version                      = "12.0"

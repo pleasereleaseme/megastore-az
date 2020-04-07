@@ -10,7 +10,7 @@ variable "environments_list" {
 }
 
 # dev values in dev.tfvars OR Azure Pipelines variables
-variable "projectname" {
+variable "project_name" {
   type        = string
   description = "The project name (lower case characters only, no punctuation)"
 }
