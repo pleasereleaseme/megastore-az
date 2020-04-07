@@ -7,22 +7,14 @@ resource "azurerm_sql_server" "asql" {
   administrator_login_password = var.asql_administrator_login_password
 }
 
-variable "database_list" {
-  default = {
-    dev = "dev"
-    qa  = "qa"
-    prd = "prd"
-  }
-}
-
 resource "azurerm_sql_database" "asqldb" {
-  for_each = var.database_list
+  for_each = var.environments_list
 
   name                = each.value
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   server_name         = azurerm_sql_server.asql.name
-  edition             = "Basic"
+  edition             = "Standard"
 }
 
 resource "azurerm_sql_firewall_rule" "asqlfw-az-all" {

@@ -4,6 +4,14 @@ variable "location" {
   description = "Datacentre location for the application"
 }
 
+variable "environments_list" {
+  default = {
+    dev = "dev"
+    qa  = "qa"
+    prd = "prd"
+  }
+}
+
 # dev values in dev.tfvars OR Azure Pipelines variables
 variable "projectname" {
   type        = string
