@@ -5,11 +5,8 @@ variable "location" {
 }
 
 variable "environments_list" {
-  default = {
-    dev = "dev"
-    qa  = "qa"
-    prd = "prd"
-  }
+  type = map(string)
+  description = "The list of environments that form the deployment pipeline"
 }
 
 # dev values in dev.tfvars OR Azure Pipelines variables
