@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  megastore.web:
+    image: ${DOCKER_REGISTRY-}megastoreweb
+    build:
+      context: .
+      dockerfile: MegaStore.Web/Dockerfile
+
+  megastore.savesalehandler:
+    image: ${DOCKER_REGISTRY-}megastoresavesalehandler
+    build:
+      context: .
+      dockerfile: MegaStore.SaveSaleHandler/Dockerfile
+
