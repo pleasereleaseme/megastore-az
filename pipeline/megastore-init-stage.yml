@@ -1,0 +1,29 @@
+parameters:
+  app_insights_instrumentation_key: ''
+
+jobs:
+  - job: configure_stage
+    workspace:
+      clean: all
+    steps:
+
+    - template: output-variable-values.yml
+
+    - task: DownloadSecureFile@1
+      name: config
+      inputs:
+        secureFile: config
+
+    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create namespace $SYSTEM_STAGENAME
+      displayName: 'configure namespace for stage'
+
+    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create secret docker-registry $ACRAUTHENTICATIONSECRETNAME --namespace=$SYSTEM_STAGENAME --docker-server=$ACRNAME.azurecr.io --docker-username=$ACRNAME --docker-password=$ACRPASSWORD_ENV --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
+      env:
+        ACRPASSWORD_ENV: $(acr_password)
+      displayName: 'add or update ACR credentials for namespace'
+
+    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create configmap message.queue --from-literal=MESSAGE_QUEUE_URL=nats://message-queue-service:4222 --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
+      displayName: 'add or update MESSAGE_QUEUE_URL configmap for namespace'
+
+    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create configmap appinsights.env --from-literal=APP_INSIGHTS_INSTRUMENTATION_KEY=$APP_INSIGHTS_INSTRUMENTATION_KEY --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
+      displayName: 'add or update APP_INSIGHTS_INSTRUMENTATION_KEY configmap configmap for namespace'

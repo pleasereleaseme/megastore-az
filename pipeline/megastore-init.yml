@@ -1,0 +1,32 @@
+name: '0.1.$(Rev:r)'
+
+trigger: none
+
+variables:
+- group: megastore
+
+pool:
+  name: local
+  demands:
+  - agent.name -equals ubuntu-18.04
+
+stages:
+- stage: qa
+  displayName: qa
+  variables:
+  - name: app_insights_instrumentation_key
+    value: $(app_insights_instrumentation_key_qa)
+  jobs:
+  - template: megastore-init-stage.yml
+    parameters:
+      app_insights_instrumentation_key: $(app_insights_instrumentation_key)
+
+- stage: prd
+  displayName: prd
+  variables:
+  - name: app_insights_instrumentation_key
+    value: $(app_insights_instrumentation_key_prd)
+  jobs:
+  - template: megastore-init-stage.yml
+    parameters:
+      AppInsightsInstrumentationKey: $(app_insights_instrumentation_key)
