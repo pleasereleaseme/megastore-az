@@ -25,13 +25,13 @@ stages:
       displayName: 'output environemt variables'
 
     - publish: $(System.DefaultWorkingDirectory)/iac
-      artifact: iac_artefact_name
+      artifact: $(iac_artefact_name)
       displayName: 'publish iac artefact'
 
     - task: DownloadPipelineArtifact@2
       inputs:
         source: current
-        artifact: iac_artefact_name
+        artifact: $(iac_artefact_name)
         path: $(Pipeline.Workspace)/iac
       displayName: 'download iac artefact'  
 
