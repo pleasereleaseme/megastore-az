@@ -13,6 +13,9 @@ pool:
 stages:
 - stage: publish
   displayName: publish
+  variables:
+  - name: k8s_artefact_name
+    value: k8s-$(Build.BuildNumber)
   jobs:
   - job: publish_artefact_then_download
     workspace:
@@ -22,11 +25,12 @@ stages:
     - template: output-variable-values.yml    
 
     - publish: $(System.DefaultWorkingDirectory)/k8s
-      artifact: k8s-$(Build.BuildNumber)
+      artifact: k8s_artefact_name
       displayName: 'publish k8s artefact'
 
     - download: current
-      artifact: k8s-$(Build.BuildNumber)
+      artifact: k8s_artefact_name
+      path: k8s
       displayName: 'download k8s artefact'            
 
 - stage: qa
