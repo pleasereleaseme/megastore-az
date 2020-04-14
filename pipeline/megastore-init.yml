@@ -32,7 +32,7 @@ stages:
       inputs:
         source: current
         artifact: k8s_artefact_name
-        path: k8s
+        path: $(Pipeline.Workspace)/k8s
       displayName: 'download k8s artefact'            
 
 - stage: qa
