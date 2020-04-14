@@ -1,10 +1,7 @@
-parameters:
-  environmentName: ''
-
 jobs:
   - deployment: deploy_to_stage
     displayName: 'deploy_to_stage'
-    environment: ${{parameters.environmentName}}
+    environment: $(environment_name)
     workspace:
       clean: all    
     strategy:

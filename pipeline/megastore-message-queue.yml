@@ -6,23 +6,18 @@ variables:
 - group: megastore
 
 pool:
-  #vmImage: 'ubuntu-latest'
   name: local
 
 stages:
-- stage: setup
-  displayName: 'setup'
+- stage: publish
+  displayName: publish
   jobs:
-  - job: setup
-    steps:
-    - template: output-variable-values.yml  
+  - template: publish-and-download-k8s-artefact.yml     
 
 - stage: qa
   displayName: 'qa'
   jobs:
   - template: megastore-message-queue-stage.yml
-    parameters:
-      environmentName: $(EnvironmentNameQa)
 
 - stage: prd
   displayName: 'prd'
@@ -30,5 +25,3 @@ stages:
   condition: succeeded('qa')  
   jobs:
   - template: megastore-message-queue-stage.yml
-    parameters:
-      environmentName: $(EnvironmentNamePrd)
