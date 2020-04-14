@@ -14,7 +14,7 @@ stages:
 - stage: publish
   displayName: publish
   jobs:
-    job: publish_artefact
+  - job: publish_artefact
     workspace:
       clean: all
     steps:
