@@ -13,8 +13,8 @@ jobs:
               inputs:
                 secureFile: config
 
-            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $SYSTEM_DEFAULTWORKINGDIRECTORY/$K8SCONFIGPATH/message-queue-service.yaml --namespace=$SYSTEM_STAGENAME
+            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/message-queue-service.yaml --namespace=$SYSTEM_STAGENAME
               displayName: 'apply service for stage'
 
-            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $SYSTEM_DEFAULTWORKINGDIRECTORY/$K8SCONFIGPATH/message-queue-deployment.yaml --namespace=$SYSTEM_STAGENAME
+            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/message-queue-deployment.yaml --namespace=$SYSTEM_STAGENAME
               displayName: 'apply deployment for stage'
