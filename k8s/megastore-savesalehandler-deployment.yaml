@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: megastore-savesalehandler-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: megastore-savesalehandler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 2
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: megastore-savesalehandler
+    spec:
+      containers:
+      - name: megastoresavesalehandler
+        env:
+        - name: MESSAGE_QUEUE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: message.queue
+              key: MESSAGE_QUEUE_URL
+        - name: DB_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: db.connection
+              key: DB_CONNECTION_STRING
+        - name: APP_INSIGHTS_INSTRUMENTATION_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: appinsights.env
+              key: APP_INSIGHTS_INSTRUMENTATION_KEY
+        image: megastoresavesalehandler
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi          
+      imagePullSecrets:
+        - name: acrauth

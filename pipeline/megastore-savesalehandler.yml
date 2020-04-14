@@ -1,0 +1,43 @@
+name: '0.1.$(Rev:r)'
+
+trigger: none
+
+variables:
+- group: megastore
+
+pool:
+  name: local
+  demands:
+  - agent.name -equals ubuntu-18.04  
+
+stages:
+- stage: build
+  displayName: 'build'
+  variables:
+  - name: ServiceName
+    value: 'megastore.savesalehandler'
+  - name: ImageName
+    value: 'megastoresavesalehandler'    
+  jobs:
+  - template: megastore-build-push-image.yml
+    parameters:
+      ServiceName: $(ServiceName)
+      ImageName: $(ImageName)
+
+- stage: qa
+  displayName: 'qa'
+  dependsOn: build
+  condition: succeeded('build')  
+  jobs:
+  - template: megastore-savesalehandler-stage.yml
+    parameters:
+      environmentName: $(EnvironmentNameQa)
+
+- stage: prd
+  displayName: 'prd'
+  dependsOn: qa
+  condition: succeeded('qa')  
+  jobs:
+  - template: megastore-savesalehandler-stage.yml
+    parameters:
+      environmentName: $(EnvironmentNamePrd)      
