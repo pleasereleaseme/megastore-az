@@ -13,6 +13,9 @@ pool:
 stages:
 - stage: provision
   displayName: provision
+  variables:
+  - name: iac_artefact_name
+    value: iac-$(Build.BuildNumber)
   jobs:
   - job: provision_resources
     workspace:
@@ -22,12 +25,15 @@ stages:
       displayName: 'output environemt variables'
 
     - publish: $(System.DefaultWorkingDirectory)/iac
-      artifact: iac
+      artifact: iac_artefact_name
       displayName: 'publish iac artefact'
 
-    - download: current
-      artifact: iac
-      displayName: 'download iac artefact'
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        source: current
+        artifact: iac_artefact_name
+        path: $(Pipeline.Workspace)/iac
+      displayName: 'download iac artefact'  
 
     - powershell: New-Item -Path . -Name "backend.tf" -ItemType "file" -Value "terraform {`n  backend `"azurerm`" {}`n}"
       workingDirectory: $(Pipeline.Workspace)/iac
