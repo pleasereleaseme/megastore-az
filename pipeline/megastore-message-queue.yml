@@ -7,6 +7,8 @@ variables:
 
 pool:
   name: local
+  demands:
+  - agent.name -equals ubuntu-18.04  
 
 stages:
 - stage: publish
