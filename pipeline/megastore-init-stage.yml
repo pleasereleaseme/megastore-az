@@ -14,10 +14,10 @@ jobs:
       inputs:
         secureFile: config
 
-    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create namespace $SYSTEM_STAGENAME
+    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $SYSTEM_DEFAULTWORKINGDIRECTORY/$K8SCONFIGPATH/namespace-$SYSTEM_STAGENAME.yaml
       displayName: 'configure namespace for stage'
 
-    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create secret docker-registry $ACRAUTHENTICATIONSECRETNAME --namespace=$SYSTEM_STAGENAME --docker-server=$ACRNAME.azurecr.io --docker-username=$ACRNAME --docker-password=$ACRPASSWORD_ENV --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
+    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create secret docker-registry $ACR_AUTHENTICATION_SECRET_NAME --namespace=$SYSTEM_STAGENAME --docker-server=$ACR_NAME.azurecr.io --docker-username=$ACR_NAME --docker-password=$ACRPASSWORD_ENV --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
       env:
         ACRPASSWORD_ENV: $(acr_password)
       displayName: 'add or update ACR credentials for namespace'
