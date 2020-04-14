@@ -11,6 +11,20 @@ pool:
   - agent.name -equals ubuntu-18.04
 
 stages:
+- stage: publish
+  displayName: publish
+  jobs:
+    job: publish_artefact
+    workspace:
+      clean: all
+    steps:
+
+    - template: output-variable-values.yml    
+
+    - publish: $(System.DefaultWorkingDirectory)/k8s
+      artifact: k8s
+      displayName: 'publish k8s artefact'    
+
 - stage: qa
   displayName: qa
   variables:
