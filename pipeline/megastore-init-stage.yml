@@ -3,15 +3,9 @@ parameters:
 
 jobs:
   - job: configure_stage
-    workspace:
-      clean: all
     steps:
 
     - template: output-variable-values.yml
-
-    - download: current
-      artifact: k8s
-      displayName: 'download k8s artefact'   
 
     - task: DownloadSecureFile@1
       name: config
