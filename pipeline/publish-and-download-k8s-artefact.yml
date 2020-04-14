@@ -1,0 +1,21 @@
+jobs:
+  - job: publish_artefact_then_download
+    variables:
+    - name: k8s_artefact_name
+      value: k8s-$(Build.BuildNumber)
+    workspace:
+      clean: all
+    steps:
+
+    - template: output-variable-values.yml    
+
+    - publish: $(System.DefaultWorkingDirectory)/k8s
+      artifact: $(k8s_artefact_name)
+      displayName: 'publish k8s artefact'
+
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        source: current
+        artifact: $(k8s_artefact_name)
+        path: $(Pipeline.Workspace)/k8s
+      displayName: 'download k8s artefact'  
