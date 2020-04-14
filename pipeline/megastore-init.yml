@@ -22,11 +22,11 @@ stages:
     - template: output-variable-values.yml    
 
     - publish: $(System.DefaultWorkingDirectory)/k8s
-      artifact: k8s
+      artifact: k8s-$(Build.BuildNumber)
       displayName: 'publish k8s artefact'
 
     - download: current
-      artifact: k8s
+      artifact: k8s-$(Build.BuildNumber)
       displayName: 'download k8s artefact'            
 
 - stage: qa

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: message-queue-service
+spec:
+  selector:
+    app: message-queue
+  type: ClusterIP
+  ports:
+  - name: client
+    port: 4222
+  - name: cluster
+    port: 6222
+  - name: monitor
+    port: 8222

@@ -1,0 +1,34 @@
+name: '0.1.$(Rev:r)'
+
+trigger: none
+
+variables:
+- group: megastore
+
+pool:
+  #vmImage: 'ubuntu-latest'
+  name: local
+
+stages:
+- stage: setup
+  displayName: 'setup'
+  jobs:
+  - job: setup
+    steps:
+    - template: output-variable-values.yml  
+
+- stage: qa
+  displayName: 'qa'
+  jobs:
+  - template: megastore-message-queue-stage.yml
+    parameters:
+      environmentName: $(EnvironmentNameQa)
+
+- stage: prd
+  displayName: 'prd'
+  dependsOn: qa
+  condition: succeeded('qa')  
+  jobs:
+  - template: megastore-message-queue-stage.yml
+    parameters:
+      environmentName: $(EnvironmentNamePrd)
