@@ -23,11 +23,7 @@ stages:
 
     - publish: $(System.DefaultWorkingDirectory)/k8s
       artifact: k8s
-      displayName: 'publish k8s artefact'
-
-    - download: current
-      artifact: k8s
-      displayName: 'download k8s artefact'      
+      displayName: 'publish k8s artefact'   
 
 - stage: qa
   displayName: qa
