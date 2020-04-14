@@ -1,14 +1,11 @@
 jobs:
   - deployment: deploy_to_stage
     displayName: 'deploy_to_stage'
-    environment: $(environment_name)
-    workspace:
-      clean: all    
+    environment: $(environment_name)  
     strategy:
       runOnce:
         deploy:
           steps:
-
             - template: output-variable-values.yml
           
             - task: DownloadSecureFile@1
