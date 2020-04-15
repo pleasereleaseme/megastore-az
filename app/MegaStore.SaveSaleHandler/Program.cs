@@ -1,7 +1,7 @@
 ﻿using MegaStore.Helper;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
-using Microsoft.ApplicationInsights.Kubernetes;
+using Microsoft.Extensions.DependencyInjection;
 using NATS.Client;
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace MegaStore.SaveSaleHandler
         static void Main(string[] args)
         {
             configuration.TelemetryInitializers.Add(new CloudRoleTelemetryInitializer());
-            //KubernetesModule.EnableKubernetes(configuration);
+            configuration.AddApplicationInsightsKubernetesEnricher();
 
             TelemetryClient client = new TelemetryClient(configuration);
             try

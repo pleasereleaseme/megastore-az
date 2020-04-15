@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 
 namespace MegaStore.Web
 {
@@ -20,9 +21,12 @@ namespace MegaStore.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            services.AddApplicationInsightsTelemetry();
+            
+            ApplicationInsightsServiceOptions aiOpts = new ApplicationInsightsServiceOptions();
+            aiOpts.EnableHeartbeat = true;
+            services.AddApplicationInsightsTelemetry(aiOpts);
             services.AddApplicationInsightsKubernetesEnricher();
+
             services.AddMvc();
             services.AddSingleton<ITelemetryInitializer, CloudRoleTelemetryInitializer>();
         }
