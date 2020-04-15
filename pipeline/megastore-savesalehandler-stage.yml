@@ -21,8 +21,8 @@ jobs:
                 DBPASSWORD_ENV: ${{parameters.db_password}}
               displayName: 'add or update DB_CONNECTION_STRING for namespace'   
 
-            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $SYSTEM_DEFAULTWORKINGDIRECTORY/$K8SCONFIGPATH/megastore-savesalehandler-deployment.yaml --namespace=$SYSTEM_STAGENAME
+            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/megastore-savesalehandler-deployment.yaml --namespace=$SYSTEM_STAGENAME
               displayName: 'apply deployment for stage'
 
-            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config set image deployment/megastore-savesalehandler-deployment megastoresavesalehandler=$ACRNAME.azurecr.io/megastoresavesalehandler:$BUILD_BUILDNUMBER --namespace=$SYSTEM_STAGENAME
+            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config set image deployment/megastore-savesalehandler-deployment megastoresavesalehandler=$ACR_NAME.azurecr.io/megastoresavesalehandler:$BUILD_BUILDNUMBER --namespace=$SYSTEM_STAGENAME
               displayName: 'set image for stage'       
