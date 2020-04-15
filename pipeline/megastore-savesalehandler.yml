@@ -21,7 +21,7 @@ stages:
   jobs:
   - template: templates/publish-and-download-k8s-artefact.yml
   
-  - template: megastore-build-push-image.yml
+  - template: templates/megastore-build-push-image.yml
     parameters:
       ServiceName: $(service_name)
       ImageName: $(image_name)
