@@ -1,0 +1,22 @@
+parameters:
+  service_name: ''
+  image_name: ''
+
+jobs:
+    - job: build_and_push_image_to_ACR   
+      steps:
+        - template: output-variable-values.yml
+        
+        - script: docker-compose -f app/docker-compose.yml build $SERVICE_NAME
+          displayName: 'build image'
+
+        - script: docker login --username $ACRNAME --password $ACRPASSWORD_ENV $ACRNAME.azurecr.io
+          env:
+            ACRPASSWORD_ENV: $(acr_password)
+          displayName: 'log in to ACR'
+          
+        - script: docker tag $IMAGE_NAME $ACR_NAME.azurecr.io/$IMAGE_NAME:$BUILD_BUILDNUMBER
+          displayName: 'tag image with build number'
+
+        - script: docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:$BUILD_BUILDNUMBER
+          displayName: 'push to ACR'

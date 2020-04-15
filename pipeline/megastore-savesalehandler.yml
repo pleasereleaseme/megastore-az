@@ -14,30 +14,32 @@ stages:
 - stage: build
   displayName: 'build'
   variables:
-  - name: ServiceName
+  - name: service_name
     value: 'megastore.savesalehandler'
-  - name: ImageName
+  - name: image_name
     value: 'megastoresavesalehandler'    
   jobs:
+  - template: publish-and-download-k8s-artefact.yml
+  
   - template: megastore-build-push-image.yml
     parameters:
-      ServiceName: $(ServiceName)
-      ImageName: $(ImageName)
+      ServiceName: $(service_name)
+      ImageName: $(image_name)
 
-- stage: qa
-  displayName: 'qa'
-  dependsOn: build
-  condition: succeeded('build')  
-  jobs:
-  - template: megastore-savesalehandler-stage.yml
-    parameters:
-      environmentName: $(EnvironmentNameQa)
+# - stage: qa
+#   displayName: 'qa'
+#   dependsOn: build
+#   condition: succeeded('build')  
+#   jobs:
+#   - template: megastore-savesalehandler-stage.yml
+#     parameters:
+#       environmentName: $(EnvironmentNameQa)
 
-- stage: prd
-  displayName: 'prd'
-  dependsOn: qa
-  condition: succeeded('qa')  
-  jobs:
-  - template: megastore-savesalehandler-stage.yml
-    parameters:
-      environmentName: $(EnvironmentNamePrd)      
+# - stage: prd
+#   displayName: 'prd'
+#   dependsOn: qa
+#   condition: succeeded('qa')  
+#   jobs:
+#   - template: megastore-savesalehandler-stage.yml
+#     parameters:
+#       environmentName: $(EnvironmentNamePrd)      
