@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: megastore-web-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: megastore-web  
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 2
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: megastore-web
+    spec:
+      containers:
+      - name: megastoreweb
+        env:
+        - name: MESSAGE_QUEUE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: message.queue
+              key: MESSAGE_QUEUE_URL
+        - name: ASPNETCORE_ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: aspnetcore.env
+              key: ASPNETCORE_ENVIRONMENT
+        - name: APP_INSIGHTS_INSTRUMENTATION_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: appinsights.env
+              key: APP_INSIGHTS_INSTRUMENTATION_KEY
+        image: megastoreweb
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi        
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name: acrauth

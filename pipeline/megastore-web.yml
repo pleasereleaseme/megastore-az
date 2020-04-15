@@ -1,0 +1,41 @@
+name: '0.1.$(Rev:r)'
+
+trigger: none
+
+variables:
+- group: megastore
+
+pool:
+  name: local
+  demands:
+  - agent.name -equals ubuntu-18.04  
+
+stages:
+- stage: build
+  displayName: 'build'
+  variables:
+  - name: service_name
+    value: 'megastore.web'
+  - name: image_name
+    value: 'megastoreweb'
+  jobs:
+  - template: templates/publish-and-download-k8s-artefact.yml
+  
+  - template: templates/megastore-build-push-image.yml
+    parameters:
+      ServiceName: $(service_name)
+      ImageName: $(image_name)
+
+- stage: qa
+  displayName: 'qa'
+  dependsOn: build
+  condition: succeeded('build')  
+  jobs:
+  - template: templates/megastore-web-stage.yml
+
+- stage: prd
+  displayName: 'prd'
+  dependsOn: qa
+  condition: succeeded('qa')  
+  jobs:
+  - template: templates/megastore-web-stage.yml

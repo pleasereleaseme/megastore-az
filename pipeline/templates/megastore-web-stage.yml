@@ -1,0 +1,23 @@
+jobs:
+  - deployment: deploy_to_stage
+    displayName: 'deploy_to_stage'
+    environment: $(environment_name)
+    strategy:
+      runOnce:
+        deploy: 
+          steps:
+            - template: output-variable-values.yml
+                      
+            - template: download-kubeconfig-file.yml
+
+            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create configmap aspnetcore.env --from-literal=ASPNETCORE_ENVIRONMENT=$SYSTEM_STAGENAME --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
+              displayName: 'add or update ASPNETCORE_ENVIRONMENT for namespace'
+
+            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/megastore-web-service.yaml --namespace=$SYSTEM_STAGENAME
+              displayName: 'apply service for namespace'
+
+            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/megastore-web-deployment.yaml --namespace=$SYSTEM_STAGENAME
+              displayName: 'apply deployment for namespace'
+
+            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config set image deployment/megastore-web-deployment megastoreweb=$ACR_NAME.azurecr.io/megastoreweb:$BUILD_BUILDNUMBER --namespace=$SYSTEM_STAGENAME
+              displayName: 'set image for namespace'    
