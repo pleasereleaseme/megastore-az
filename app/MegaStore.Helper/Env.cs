@@ -12,7 +12,7 @@ namespace MegaStore.Helper
 
         public static string DbConnectionString { get { return Get("DB_CONNECTION_STRING"); } }
 
-        public static string AppInsightsInstrumentationKey { get { return Get("APP_INSIGHTS_INSTRUMENTATION_KEY"); } }
+        public static string AppInsightsInstrumentationKey { get { return Get("APPINSIGHTS_INSTRUMENTATIONKEY"); } }
 
         private static string Get(string variable)
         {

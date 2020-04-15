@@ -8,9 +8,6 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-USE <environment_name, sysname, environment_name>
-GO
-
 CREATE USER sales_user
 	FOR LOGIN sales_user_<environment_name, sysname, environment_name>
 	WITH DEFAULT_SCHEMA = dbo

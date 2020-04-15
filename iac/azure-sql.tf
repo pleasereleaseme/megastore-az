@@ -14,7 +14,7 @@ resource "azurerm_sql_database" "asqldb" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   server_name         = azurerm_sql_server.asql.name
-  edition             = "Free"
+  edition             = "Standard"
 }
 
 resource "azurerm_sql_firewall_rule" "asqlfw-az-all" {
