@@ -19,7 +19,7 @@ stages:
   - name: image_name
     value: 'megastoresavesalehandler'    
   jobs:
-  - template: publish-and-download-k8s-artefact.yml
+  - template: templates/publish-and-download-k8s-artefact.yml
   
   - template: megastore-build-push-image.yml
     parameters:
@@ -31,15 +31,15 @@ stages:
   dependsOn: build
   condition: succeeded('build')  
   jobs:
-  - template: megastore-savesalehandler-stage.yml
+  - template: templates/megastore-savesalehandler-stage.yml
     parameters:
       db_password: $(db_password_qa)
 
-# - stage: prd
-#   displayName: 'prd'
-#   dependsOn: qa
-#   condition: succeeded('qa')  
-#   jobs:
-#   - template: megastore-savesalehandler-stage.yml
-#     parameters:
-#       environmentName: $(EnvironmentNamePrd)      
+- stage: prd
+  displayName: 'prd'
+  dependsOn: qa
+  condition: succeeded('qa')  
+  jobs:
+  - template: templates/megastore-savesalehandler-stage.yml
+    parameters:
+      db_password: $(db_password_prd)   
