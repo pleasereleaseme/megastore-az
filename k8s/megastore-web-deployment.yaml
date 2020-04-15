@@ -31,11 +31,11 @@ spec:
             configMapKeyRef:
               name: aspnetcore.env
               key: ASPNETCORE_ENVIRONMENT
-        - name: APP_INSIGHTS_INSTRUMENTATION_KEY
+        - name: APPINSIGHTS_INSTRUMENTATIONKEY
           valueFrom:
             configMapKeyRef:
               name: appinsights.env
-              key: APP_INSIGHTS_INSTRUMENTATION_KEY
+              key: APPINSIGHTS_INSTRUMENTATIONKEY
         image: megastoreweb
         imagePullPolicy: Always
         resources:

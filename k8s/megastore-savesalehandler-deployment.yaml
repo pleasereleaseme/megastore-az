@@ -31,11 +31,11 @@ spec:
             secretKeyRef:
               name: db.connection
               key: DB_CONNECTION_STRING
-        - name: APP_INSIGHTS_INSTRUMENTATION_KEY
+        - name: APPINSIGHTS_INSTRUMENTATIONKEY
           valueFrom:
             configMapKeyRef:
               name: appinsights.env
-              key: APP_INSIGHTS_INSTRUMENTATION_KEY
+              key: APPINSIGHTS_INSTRUMENTATIONKEY
         image: megastoresavesalehandler
         imagePullPolicy: Always
         resources:
