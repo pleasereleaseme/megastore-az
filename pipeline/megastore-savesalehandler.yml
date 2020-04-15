@@ -26,14 +26,14 @@ stages:
       ServiceName: $(service_name)
       ImageName: $(image_name)
 
-# - stage: qa
-#   displayName: 'qa'
-#   dependsOn: build
-#   condition: succeeded('build')  
-#   jobs:
-#   - template: megastore-savesalehandler-stage.yml
-#     parameters:
-#       environmentName: $(EnvironmentNameQa)
+- stage: qa
+  displayName: 'qa'
+  dependsOn: build
+  condition: succeeded('build')  
+  jobs:
+  - template: megastore-savesalehandler-stage.yml
+    parameters:
+      db_password: $(db_password_qa)
 
 # - stage: prd
 #   displayName: 'prd'
