@@ -1,5 +1,5 @@
 parameters:
-  app_insights_instrumentation_key: ''
+  appinsights_instrumentationkey: ''
 
 jobs:
   - job: configure_stage
@@ -20,5 +20,5 @@ jobs:
     - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create configmap message.queue --from-literal=MESSAGE_QUEUE_URL=nats://message-queue-service:4222 --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
       displayName: 'add or update MESSAGE_QUEUE_URL configmap for namespace'
 
-    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create configmap appinsights.env --from-literal=APP_INSIGHTS_INSTRUMENTATION_KEY=$APP_INSIGHTS_INSTRUMENTATION_KEY --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
-      displayName: 'add or update APP_INSIGHTS_INSTRUMENTATION_KEY configmap configmap for namespace'
+    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create configmap appinsights.env --from-literal=APPINSIGHTS_INSTRUMENTATIONKEY=$APPINSIGHTS_INSTRUMENTATIONKEY --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
+      displayName: 'add or update APPINSIGHTS_INSTRUMENTATIONKEY configmap configmap for namespace'
