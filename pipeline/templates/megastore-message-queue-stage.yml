@@ -8,10 +8,7 @@ jobs:
           steps:
             - template: output-variable-values.yml
           
-            - task: DownloadSecureFile@1
-              name: config
-              inputs:
-                secureFile: config
+            - template: download-kubeconfig-file.yml
 
             - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/message-queue-service.yaml --namespace=$SYSTEM_STAGENAME
               displayName: 'apply service for stage'

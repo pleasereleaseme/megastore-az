@@ -14,7 +14,7 @@ stages:
 - stage: build
   displayName: build
   jobs:
-  - template: publish-and-download-k8s-artefact.yml          
+  - template: templates/publish-and-download-k8s-artefact.yml          
 
 - stage: qa
   displayName: qa
@@ -22,7 +22,7 @@ stages:
   - name: app_insights_instrumentation_key
     value: $(app_insights_instrumentation_key_qa)
   jobs:
-  - template: megastore-init-stage.yml
+  - template: templates/megastore-init-stage.yml
     parameters:
       app_insights_instrumentation_key: $(app_insights_instrumentation_key)
 
@@ -32,6 +32,6 @@ stages:
   - name: app_insights_instrumentation_key
     value: $(app_insights_instrumentation_key_prd)
   jobs:
-  - template: megastore-init-stage.yml
+  - template: templates/megastore-init-stage.yml
     parameters:
       AppInsightsInstrumentationKey: $(app_insights_instrumentation_key)

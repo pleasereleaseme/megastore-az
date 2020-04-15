@@ -14,16 +14,16 @@ stages:
 - stage: build
   displayName: build
   jobs:
-  - template: publish-and-download-k8s-artefact.yml     
+  - template: templates/publish-and-download-k8s-artefact.yml     
 
 - stage: qa
   displayName: 'qa'
   jobs:
-  - template: megastore-message-queue-stage.yml
+  - template: templates/megastore-message-queue-stage.yml
 
 - stage: prd
   displayName: 'prd'
   dependsOn: qa
   condition: succeeded('qa')  
   jobs:
-  - template: megastore-message-queue-stage.yml
+  - template: templates/megastore-message-queue-stage.yml

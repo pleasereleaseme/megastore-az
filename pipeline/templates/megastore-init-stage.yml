@@ -7,10 +7,7 @@ jobs:
 
     - template: output-variable-values.yml
 
-    - task: DownloadSecureFile@1
-      name: config
-      inputs:
-        secureFile: config
+    - template: download-kubeconfig-file.yml
 
     - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/namespace-$SYSTEM_STAGENAME.yaml
       displayName: 'configure namespace for stage'
