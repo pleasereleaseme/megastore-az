@@ -1,5 +1,5 @@
 ﻿while ($true)
 {
-    (New-Object Net.WebClient).DownloadString("http://51.11.128.195/")
-    Start-Sleep -Milliseconds 5
+    (New-Object Net.WebClient).DownloadString("http://localhost:32768/")
+    Start-Sleep -Milliseconds 2000
 }

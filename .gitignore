@@ -259,7 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-**/db-credentials.env
 
 # VS Code
 .vscode/*
@@ -284,3 +283,6 @@ dev.tfvars
 
 # Crash log files
 crash.log
+
+# Docker Compose
+**/db-credentials.env
