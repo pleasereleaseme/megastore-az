@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MegaStore.Helper;
+using Microsoft.EntityFrameworkCore;
 
-namespace MegaStore.Helper
+namespace MegaStore.SaveSaleHandler
 {
     // This code is modified from https://github.com/sixeyed/docker-on-windows
     public class MegaStoreContext : DbContext
