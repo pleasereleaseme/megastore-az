@@ -1,6 +1,6 @@
 jobs:
   - deployment: deploy_to_stage
-    displayName: 'deploy_to_stage'
+    displayName: 'deploy_to_$(environment_name)_stage'
     environment: $(environment_name)  
     strategy:
       runOnce:
