@@ -18,9 +18,9 @@ stages:
 
 - stage: qa
   displayName: 'qa'
-  - variables:
+  variables:
     - name: job_name
-      value: 'deploy_to_stage_'$(System.StageName)'
+      value: 'deploy_to_stage_'$(System.StageName)
 
   jobs:
   - template: templates/megastore-message-queue-stage.yml
