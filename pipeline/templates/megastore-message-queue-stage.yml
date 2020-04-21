@@ -1,5 +1,5 @@
 jobs:
-  - deployment: $(job_name)
+  - deployment: deploy_to_stage
     displayName: $(job_name)
     environment: $(environment_name)  
     strategy:
