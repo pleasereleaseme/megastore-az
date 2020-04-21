@@ -1,9 +1,10 @@
-parameters:
-  job_suffix: ''
+variables:
+- name: job_name
+  value: 'deploy_to_stage_'$(System.StageName)'
 
 jobs:
-  - deployment: $(environment_name)
-    displayName: $(environment_name)
+  - deployment: $(job_name)
+    displayName: $(job_name)
     environment: $(environment_name)  
     strategy:
       runOnce:
