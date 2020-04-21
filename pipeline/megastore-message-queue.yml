@@ -14,12 +14,14 @@ stages:
 - stage: build
   displayName: build
   jobs:
-  - template: templates/publish-and-download-k8s-artefact.yml     
+  - template: templates/publish-and-download-k8s-artefact.yml
 
 - stage: qa
   displayName: 'qa'
   jobs:
   - template: templates/megastore-message-queue-stage.yml
+    parameters:
+      job_suffix: $(System.StageName)  
 
 - stage: prd
   displayName: 'prd'
