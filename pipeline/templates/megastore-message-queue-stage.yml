@@ -2,8 +2,8 @@ parameters:
   job_suffix: ''
 
 jobs:
-  - deployment: deploy_to_stage_${{ parameters.job_suffix }}
-    displayName: 'deploy_to_stage_${{ parameters.job_suffix }}'
+  - deployment: ${{ parameters.job_suffix }}
+    displayName: ${{ parameters.job_suffix }}
     environment: $(environment_name)  
     strategy:
       runOnce:
