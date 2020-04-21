@@ -20,12 +20,10 @@ stages:
   displayName: 'qa'
   variables:
     - name: job_name
-      value: 'deploy_to_stage_'$(System.StageName)
+      value: 'deploy_to_stage_qa'
 
   jobs:
   - template: templates/megastore-message-queue-stage.yml
-    parameters:
-      job_suffix: $(System.StageName)  
 
 - stage: prd
   displayName: 'prd'
