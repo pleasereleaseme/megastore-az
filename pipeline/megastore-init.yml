@@ -25,7 +25,7 @@ stages:
   - template: templates/megastore-init-stage.yml
     parameters:
       job_name: ${{ 'configure_stage_for_qa' }}    
-      appinsights_instrumentationkey: $(appinsights_instrumentationkey)
+      appinsights_instrumentationkey: $(appinsights_instrumentationkey_qa)
 
 - stage: prd
   displayName: prd
@@ -36,4 +36,4 @@ stages:
   - template: templates/megastore-init-stage.yml
     parameters:
       job_name: ${{ 'configure_stage_for_prd' }}    
-      appinsights_instrumentationkey: $(appinsights_instrumentationkey)
+      appinsights_instrumentationkey: $(appinsights_instrumentationkey_prd)
