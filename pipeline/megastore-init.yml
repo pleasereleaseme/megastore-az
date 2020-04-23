@@ -21,7 +21,7 @@ stages:
   variables:
   - name: appinsights_instrumentationkey
     value: $(appinsights_instrumentationkey_qa)
-    ${{ variables.job_name }}: ${{ variables['configure_stage_for_qa'] }}
+    job_name: ${{ 'configure_stage_for_qa' }}
   jobs:
   - template: templates/megastore-init-stage.yml
     parameters:
