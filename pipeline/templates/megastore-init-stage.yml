@@ -2,7 +2,7 @@ parameters:
   appinsights_instrumentationkey: ''
 
 jobs:
-  - job: configure_stage
+  - job: ${{ variables.job_name }}
     steps:
 
     - template: output-variable-values.yml
