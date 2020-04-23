@@ -1,8 +1,9 @@
 parameters:
   appinsights_instrumentationkey: ''
+  job_name: ''
 
 jobs:
-  - job: ${{ variables.job_name }}
+  - job: ${{ parameters.job_name }}
     steps:
 
     - template: output-variable-values.yml
