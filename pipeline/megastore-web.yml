@@ -22,7 +22,7 @@ stages:
   - template: templates/publish-and-download-k8s-artefact.yml
   
   - template: templates/megastore-build-push-image.yml
-    parameters:
+    parameters:    
       ServiceName: $(service_name)
       ImageName: $(image_name)
 
@@ -32,6 +32,8 @@ stages:
   condition: succeeded('build')  
   jobs:
   - template: templates/megastore-web-stage.yml
+    parameters:
+      job_name: ${{ 'deploy_to_qa_stage' }} 
 
 - stage: prd
   displayName: 'prd'
@@ -39,3 +41,5 @@ stages:
   condition: succeeded('qa')  
   jobs:
   - template: templates/megastore-web-stage.yml
+    parameters:
+      job_name: ${{ 'deploy_to_prd_stage' }}   

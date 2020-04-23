@@ -1,9 +1,10 @@
 parameters:
+  job_name: ''
   db_password: ''
 
 jobs:
-  - deployment: deploy_to_stage
-    displayName: 'deploy_to_stage'
+  - deployment: ${{ parameters.job_name }}
+    displayName: ${{ parameters.job_name }}
     environment: $(environment_name)
     strategy:
       runOnce:

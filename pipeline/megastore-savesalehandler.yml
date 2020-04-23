@@ -22,7 +22,7 @@ stages:
   - template: templates/publish-and-download-k8s-artefact.yml
   
   - template: templates/megastore-build-push-image.yml
-    parameters:
+    parameters:     
       ServiceName: $(service_name)
       ImageName: $(image_name)
 
@@ -33,6 +33,7 @@ stages:
   jobs:
   - template: templates/megastore-savesalehandler-stage.yml
     parameters:
+      job_name: ${{ 'deploy_to_qa_stage' }}  
       db_password: $(db_password_qa)
 
 - stage: prd
@@ -42,4 +43,5 @@ stages:
   jobs:
   - template: templates/megastore-savesalehandler-stage.yml
     parameters:
+      job_name: ${{ 'deploy_to_prd_stage' }}  
       db_password: $(db_password_prd)   

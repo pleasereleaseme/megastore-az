@@ -22,7 +22,7 @@ stages:
   jobs:
   - template: templates/megastore-message-queue-stage.yml
     parameters:
-      job_name: ${{ 'configure_stage_for_qa' }}  
+      job_name: ${{ 'deploy_to_qa_stage' }}  
 
 - stage: prd
   displayName: 'prd'
@@ -31,4 +31,4 @@ stages:
   jobs:
   - template: templates/megastore-message-queue-stage.yml
     parameters:
-      job_name: ${{ 'configure_stage_for_prd' }}     
+      job_name: ${{ 'deploy_to_prd_stage' }}     
