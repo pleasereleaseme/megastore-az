@@ -1,6 +1,6 @@
 parameters:
-  appinsights_instrumentationkey: ''
   job_name: ''
+  appinsights_instrumentationkey: ''
 
 jobs:
   - job: ${{ parameters.job_name }}
