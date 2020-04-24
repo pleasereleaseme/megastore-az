@@ -3,8 +3,6 @@ jobs:
     variables:
     - name: k8s_artefact_name
       value: k8s-$(Build.BuildNumber)
-    workspace:
-      clean: all
     steps:
 
     - template: output-variable-values.yml    

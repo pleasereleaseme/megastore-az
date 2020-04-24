@@ -11,9 +11,12 @@ pool:
   - agent.name -equals ubuntu-18.04
 
 stages:
-- stage: build
-  displayName: build
+- stage: init
+  displayName: init
   jobs:
+  - job: clean_workspace
+    workspace:
+      clean: all
   - template: templates/publish-and-download-k8s-artefact.yml          
 
 - stage: qa
