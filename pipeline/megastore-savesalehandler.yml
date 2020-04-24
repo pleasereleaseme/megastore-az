@@ -11,16 +11,17 @@ pool:
   - agent.name -equals ubuntu-18.04  
 
 stages:
-- stage: build
-  displayName: 'build'
+- stage: init
+  displayName: 'init'
   variables:
   - name: service_name
     value: 'megastore.savesalehandler'
   - name: image_name
     value: 'megastoresavesalehandler'    
   jobs:
+  - template: templates/output-environment-variables.yml
+  - template: templates/clean-workspace-and-full-git-checkout.yml  
   - template: templates/publish-and-download-k8s-artefact.yml
-  
   - template: templates/megastore-build-push-image.yml
     parameters:     
       ServiceName: $(service_name)
@@ -31,6 +32,7 @@ stages:
   dependsOn: build
   condition: succeeded('build')  
   jobs:
+  - template: templates/output-environment-variables.yml
   - template: templates/megastore-savesalehandler-stage.yml
     parameters:
       job_name: ${{ 'deploy_to_qa_stage' }}  
@@ -41,6 +43,7 @@ stages:
   dependsOn: qa
   condition: succeeded('qa')  
   jobs:
+  - template: templates/output-environment-variables.yml
   - template: templates/megastore-savesalehandler-stage.yml
     parameters:
       job_name: ${{ 'deploy_to_prd_stage' }}  

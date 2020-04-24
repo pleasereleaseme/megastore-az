@@ -9,9 +9,7 @@ jobs:
     strategy:
       runOnce:
         deploy:
-          steps:
-            - template: output-variable-values.yml
-            
+          steps:          
             - template: download-kubeconfig-file.yml
 
             - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create secret generic db.connection --from-literal=DB_CONNECTION_STRING="Server=tcp:$DB_SERVER_NAME.database.windows.net,1433;Initial Catalog=$SYSTEM_STAGENAME;Persist Security Info=False;User ID=sales_user_$SYSTEM_STAGENAME;Password=$DBPASSWORD_ENV;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -

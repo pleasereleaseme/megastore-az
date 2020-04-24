@@ -8,9 +8,7 @@ jobs:
     strategy:
       runOnce:
         deploy: 
-          steps:
-            - template: output-variable-values.yml
-                      
+          steps:                     
             - template: download-kubeconfig-file.yml
 
             - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create configmap aspnetcore.env --from-literal=ASPNETCORE_ENVIRONMENT=$SYSTEM_STAGENAME --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
