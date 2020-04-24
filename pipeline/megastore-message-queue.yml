@@ -28,8 +28,7 @@ stages:
     environment: $(environment_name)  
     strategy:
       runOnce:
-        deploy:
-        - template: templates/output-environment-variables.yml    
+        deploy:  
         - template: templates/megastore-message-queue-stage.yml
 
 # - stage: prd
