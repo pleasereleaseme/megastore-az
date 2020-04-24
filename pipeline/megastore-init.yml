@@ -20,6 +20,8 @@ stages:
 
 - stage: qa
   displayName: qa
+  dependsOn: init
+  condition: succeeded('init') 
   variables:
   - name: appinsights_instrumentationkey
     value: $(appinsights_instrumentationkey_qa)

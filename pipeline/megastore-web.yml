@@ -30,8 +30,8 @@ stages:
 
 - stage: qa
   displayName: 'qa'
-  dependsOn: build
-  condition: succeeded('build')  
+  dependsOn: init
+  condition: succeeded('init')  
   jobs:
   - template: templates/output-environment-variables.yml  
   - template: templates/megastore-web-stage.yml
