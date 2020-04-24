@@ -9,6 +9,7 @@ jobs:
       runOnce:
         deploy:
           steps:
+            - download: none
             - template: download-kubeconfig-file.yml
 
             - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/message-queue-service.yaml --namespace=$SYSTEM_STAGENAME
