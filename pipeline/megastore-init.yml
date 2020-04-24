@@ -14,9 +14,12 @@ stages:
 - stage: init
   displayName: init
   jobs:
-  - template: templates/clean-workspace-and-full-git-checkout.yml
-  - template: templates/output-environment-variables.yml             
-  - template: templates/publish-and-download-k8s-artefact.yml          
+    workspace:
+      clean: all
+  - job:
+    steps:
+    - template: templates/output-environment-variables.yml             
+  #- template: templates/publish-and-download-k8s-artefact.yml          
 
 - stage: qa
   displayName: qa
