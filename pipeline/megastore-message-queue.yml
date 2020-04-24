@@ -28,8 +28,9 @@ stages:
     environment: $(environment_name)  
     strategy:
       runOnce:
-        deploy:  
-        - template: templates/megastore-message-queue-stage.yml
+        deploy:
+          steps:
+          - template: templates/megastore-message-queue-stage.yml
 
 # - stage: prd
 #   displayName: 'prd'
