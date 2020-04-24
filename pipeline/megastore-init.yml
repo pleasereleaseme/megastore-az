@@ -29,9 +29,9 @@ stages:
   - name: appinsights_instrumentationkey
     value: $(appinsights_instrumentationkey_qa)
   jobs:
-    - job: output-environment_variables
-      steps:
-      - template: templates/output-environment-variables.yml
+  - job: output-environment_variables
+    steps:
+    - template: templates/output-environment-variables.yml
   - template: templates/megastore-init-stage.yml
     parameters:
       job_name: ${{ 'configure_stage_for_qa' }}    
@@ -44,8 +44,8 @@ stages:
     value: $(appinsights_instrumentationkey_prd)
   jobs:    
   - job: output-environment_variables
-      steps:
-      - template: templates/output-environment-variables.yml
+    steps:
+    - template: templates/output-environment-variables.yml
   - template: templates/megastore-init-stage.yml
     parameters:
       job_name: ${{ 'configure_stage_for_prd' }}    
