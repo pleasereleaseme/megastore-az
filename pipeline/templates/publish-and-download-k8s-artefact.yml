@@ -1,16 +1,14 @@
-jobs:
-  - job: publish_and_download_k8s_artefact
-    variables:
-    - name: k8s_artefact_name
-      value: k8s-$(Build.BuildNumber)
-    steps:
-    - publish: $(System.DefaultWorkingDirectory)/k8s
-      artifact: $(k8s_artefact_name)
-      displayName: 'publish k8s artefact'
+variables:
+- name: k8s_artefact_name
+  value: k8s-$(Build.BuildNumber)
+steps:
+- publish: $(System.DefaultWorkingDirectory)/k8s
+  artifact: $(k8s_artefact_name)
+  displayName: 'publish k8s artefact'
 
-    - task: DownloadPipelineArtifact@2
-      inputs:
-        source: current
-        artifact: $(k8s_artefact_name)
-        path: $(Pipeline.Workspace)/k8s
-      displayName: 'download k8s artefact'  
+- task: DownloadPipelineArtifact@2
+  inputs:
+    source: current
+    artifact: $(k8s_artefact_name)
+    path: $(Pipeline.Workspace)/k8s
+  displayName: 'download k8s artefact'  
