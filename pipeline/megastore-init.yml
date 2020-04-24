@@ -21,28 +21,32 @@ stages:
     - template: templates/output-environment-variables.yml             
     - template: templates/publish-and-download-k8s-artefact.yml          
 
-# - stage: qa
-#   displayName: qa
-#   dependsOn: init
-#   condition: succeeded('init') 
-#   variables:
-#   - name: appinsights_instrumentationkey
-#     value: $(appinsights_instrumentationkey_qa)
-#   jobs:
-#   - template: templates/output-environment-variables.yml  
-#   - template: templates/megastore-init-stage.yml
-#     parameters:
-#       job_name: ${{ 'configure_stage_for_qa' }}    
-#       appinsights_instrumentationkey: $(appinsights_instrumentationkey)
+- stage: qa
+  displayName: qa
+  dependsOn: init
+  condition: succeeded('init') 
+  variables:
+  - name: appinsights_instrumentationkey
+    value: $(appinsights_instrumentationkey_qa)
+  jobs:
+    - job: output-environment_variables
+      steps:
+      - template: templates/output-environment-variables.yml
+  - template: templates/megastore-init-stage.yml
+    parameters:
+      job_name: ${{ 'configure_stage_for_qa' }}    
+      appinsights_instrumentationkey: $(appinsights_instrumentationkey)
 
-# - stage: prd
-#   displayName: prd
-#   variables:
-#   - name: appinsights_instrumentationkey
-#     value: $(appinsights_instrumentationkey_prd)
-#   jobs:
-#   - template: templates/output-environment-variables.yml
-#   - template: templates/megastore-init-stage.yml
-#     parameters:
-#       job_name: ${{ 'configure_stage_for_prd' }}    
-#       appinsights_instrumentationkey: $(appinsights_instrumentationkey)
+- stage: prd
+  displayName: prd
+  variables:
+  - name: appinsights_instrumentationkey
+    value: $(appinsights_instrumentationkey_prd)
+  jobs:    
+  - job: output-environment_variables
+      steps:
+      - template: templates/output-environment-variables.yml
+  - template: templates/megastore-init-stage.yml
+    parameters:
+      job_name: ${{ 'configure_stage_for_prd' }}    
+      appinsights_instrumentationkey: $(appinsights_instrumentationkey)
