@@ -19,31 +19,43 @@ stages:
   - name: image_name
     value: 'megastoreweb'
   jobs:
-  - template: templates/clean-workspace-and-full-git-checkout.yml 
-  - template: templates/output-environment-variables.yml   
-  - template: templates/publish-and-download-k8s-artefact.yml
-  
-  - template: templates/megastore-build-push-image.yml
-    parameters:    
-      ServiceName: $(service_name)
-      ImageName: $(image_name)
+  - job: init
+    workspace:
+      clean: all
+    steps:
+    - template: templates/output-environment-variables.yml             
+    - template: templates/publish-and-download-k8s-artefact.yml 
+    - template: templates/megastore-build-push-image.yml
+      parameters:    
+        ServiceName: $(service_name)
+        ImageName: $(image_name)
 
 - stage: qa
   displayName: 'qa'
   dependsOn: init
   condition: succeeded('init')  
   jobs:
-  - template: templates/output-environment-variables.yml  
-  - template: templates/megastore-web-stage.yml
-    parameters:
-      job_name: ${{ 'deploy_to_qa_stage' }} 
+  - deployment: deploy_to_qa_stage
+    displayName: deploy_to_qa_stage
+    environment: $(environment_name)  
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: templates/output-environment-variables.yml
+          - template: templates/megastore-web-stage.yml
 
 - stage: prd
   displayName: 'prd'
   dependsOn: qa
   condition: succeeded('qa')  
   jobs:
-  - template: templates/output-environment-variables.yml  
-  - template: templates/megastore-web-stage.yml
-    parameters:
-      job_name: ${{ 'deploy_to_prd_stage' }}   
+  - deployment: deploy_to_prd_stage
+    displayName: deploy_to_prd_stage
+    environment: $(environment_name)  
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: templates/output-environment-variables.yml
+          - template: templates/megastore-web-stage.yml
