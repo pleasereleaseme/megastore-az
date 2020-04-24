@@ -1,0 +1,4 @@
+  jobs:
+  - job: clean_workspace
+    workspace:
+      clean: all

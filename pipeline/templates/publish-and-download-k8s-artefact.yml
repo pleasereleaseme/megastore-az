@@ -4,7 +4,6 @@ jobs:
     - name: k8s_artefact_name
       value: k8s-$(Build.BuildNumber)
     steps:
-
     - template: output-variable-values.yml    
 
     - publish: $(System.DefaultWorkingDirectory)/k8s
