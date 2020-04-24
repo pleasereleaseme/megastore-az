@@ -23,6 +23,7 @@ stages:
 
 - stage: qa
   displayName: qa
+  environment: $(environment_name) 
   dependsOn: init
   condition: succeeded('init') 
   variables:
@@ -31,7 +32,6 @@ stages:
   jobs:
   - deployment: configure_stage_for_qa
     displayName: configure_stage_for_qa
-    environment: $(environment_name) 
     strategy:
       runOnce:
         deploy:
