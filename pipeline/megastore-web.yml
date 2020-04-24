@@ -8,7 +8,7 @@ variables:
 pool:
   name: local
   demands:
-  - agent.name -equals ubuntu-18.04  
+  - agent.name -equals $(local_linux_agent_name)  
 
 stages:
 - stage: init

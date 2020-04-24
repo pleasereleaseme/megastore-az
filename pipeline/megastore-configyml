@@ -8,7 +8,7 @@ variables:
 pool:
   name: local
   demands:
-  - agent.name -equals ubuntu-18.04
+  - agent.name -equals $(local_linux_agent_name)
 
 stages:
 - stage: init
@@ -37,7 +37,7 @@ stages:
         deploy:
           steps:
           - template: templates/output-environment-variables.yml
-          - template: templates/megastore-init-stage.yml
+          - template: templates/megastore-config-stage.yml
             parameters:
               appinsights_instrumentationkey: $(appinsights_instrumentationkey)
 
@@ -57,6 +57,6 @@ stages:
         deploy:
           steps:
           - template: templates/output-environment-variables.yml
-          - template: templates/megastore-init-stage.yml
+          - template: templates/megastore-config-stage.yml
             parameters:
               appinsights_instrumentationkey: $(appinsights_instrumentationkey)

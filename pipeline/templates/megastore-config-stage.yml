@@ -5,9 +5,6 @@ steps:
 - download: none    
 - template: download-kubeconfig-file.yml
 
-- script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/namespace-$SYSTEM_STAGENAME.yaml
-  displayName: 'configure namespace for stage'
-
 - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create secret docker-registry $ACR_AUTHENTICATION_SECRET_NAME --namespace=$SYSTEM_STAGENAME --docker-server=$ACR_NAME.azurecr.io --docker-username=$ACR_NAME --docker-password=$ACRPASSWORD_ENV --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
   env:
     ACRPASSWORD_ENV: $(acr_password)
