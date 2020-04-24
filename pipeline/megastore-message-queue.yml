@@ -35,12 +35,16 @@ stages:
           steps:
           - template: templates/megastore-message-queue-stage.yml
 
-# - stage: prd
-#   displayName: 'prd'
-#   dependsOn: qa
-#   condition: succeeded('qa')  
-#   jobs:
-#   - template: templates/output-environment-variables.yml    
-#   - template: templates/megastore-message-queue-stage.yml
-#     parameters:
-#       job_name: ${{ 'deploy_to_prd_stage' }}     
+- stage: prd
+  displayName: 'prd'
+  dependsOn: qa
+  condition: succeeded('qa')  
+  jobs:
+  - deployment: deploy_to_prd_stage
+    displayName: deploy_to_prd_stage
+    environment: $(environment_name)  
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: templates/megastore-message-queue-stage.yml
