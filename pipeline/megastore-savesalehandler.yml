@@ -19,13 +19,16 @@ stages:
   - name: image_name
     value: 'megastoresavesalehandler'    
   jobs:
-  - template: templates/clean-workspace-and-full-git-checkout.yml  
-  - template: templates/output-environment-variables.yml
-  - template: templates/publish-and-download-k8s-artefact.yml
-  - template: templates/megastore-build-push-image.yml
-    parameters:     
-      ServiceName: $(service_name)
-      ImageName: $(image_name)
+  - job: init
+    workspace:
+      clean: all
+    steps:
+    - template: templates/output-environment-variables.yml             
+    - template: templates/publish-and-download-k8s-artefact.yml  
+    - template: templates/megastore-build-push-image.yml
+      parameters:     
+        ServiceName: $(service_name)
+        ImageName: $(image_name)
 
 - stage: qa
   displayName: 'qa'

@@ -33,6 +33,7 @@ stages:
       runOnce:
         deploy:
           steps:
+          - template: templates/output-environment-variables.yml
           - template: templates/megastore-message-queue-stage.yml
 
 - stage: prd
@@ -47,4 +48,5 @@ stages:
       runOnce:
         deploy:
           steps:
+          - template: templates/output-environment-variables.yml
           - template: templates/megastore-message-queue-stage.yml
