@@ -14,9 +14,9 @@ stages:
 - stage: init
   displayName: init
   jobs:
+  - job: init
     workspace:
       clean: all
-  - job: init
     steps:
     - template: templates/output-environment-variables.yml             
   #- template: templates/publish-and-download-k8s-artefact.yml          
