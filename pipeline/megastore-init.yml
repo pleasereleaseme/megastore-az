@@ -22,8 +22,7 @@ stages:
     - template: templates/publish-and-download-k8s-artefact.yml          
 
 - stage: qa
-  displayName: qa
-  environment: $(environment_name) 
+  displayName: qa 
   dependsOn: init
   condition: succeeded('init') 
   variables:
@@ -32,6 +31,7 @@ stages:
   jobs:
   - deployment: configure_stage_for_qa
     displayName: configure_stage_for_qa
+    environment: $(environment_name)
     strategy:
       runOnce:
         deploy:
@@ -52,6 +52,7 @@ stages:
   jobs:    
   - deployment: configure_stage_for_prd
     displayName: configure_stage_for_prd
+    environment: $(environment_name)
     strategy:
       runOnce:
         deploy:
