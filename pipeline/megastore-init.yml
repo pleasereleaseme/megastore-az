@@ -31,6 +31,7 @@ stages:
   jobs:
   - deployment: configure_stage_for_qa
     displayName: configure_stage_for_qa
+    environment: $(environment_name) 
     strategy:
       runOnce:
         deploy:
@@ -42,6 +43,7 @@ stages:
 
 - stage: prd
   displayName: prd
+  environment: $(environment_name) 
   dependsOn: qa
   condition: succeeded('qa')
   variables:
