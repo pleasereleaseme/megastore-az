@@ -43,7 +43,6 @@ stages:
 
 - stage: prd
   displayName: prd
-  environment: $(environment_name) 
   dependsOn: qa
   condition: succeeded('qa')
   variables:
