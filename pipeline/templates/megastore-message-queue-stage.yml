@@ -1,19 +1,9 @@
-parameters:
-  job_name: ''
+steps:
+  - download: none
+  - template: download-kubeconfig-file.yml
 
-jobs:
-  - deployment: ${{ parameters.job_name }}
-    displayName: ${{ parameters.job_name }}
-    environment: $(environment_name)  
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-            - download: none
-            - template: download-kubeconfig-file.yml
+  - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/message-queue-service.yaml --namespace=$SYSTEM_STAGENAME
+    displayName: 'apply service for stage'
 
-            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/message-queue-service.yaml --namespace=$SYSTEM_STAGENAME
-              displayName: 'apply service for stage'
-
-            - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/message-queue-deployment.yaml --namespace=$SYSTEM_STAGENAME
-              displayName: 'apply deployment for stage'
+  - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/message-queue-deployment.yaml --namespace=$SYSTEM_STAGENAME
+    displayName: 'apply deployment for stage'

@@ -23,17 +23,21 @@ stages:
   dependsOn: init
   condition: succeeded('init')  
   jobs:
-  - template: templates/output-environment-variables.yml    
-  - template: templates/megastore-message-queue-stage.yml
-    parameters:
-      job_name: ${{ 'deploy_to_qa_stage' }}  
+  - deployment: deploy_to_qa_stage
+    displayName: deploy_to_qa_stage
+    environment: $(environment_name)  
+    strategy:
+      runOnce:
+        deploy:
+        - template: templates/output-environment-variables.yml    
+        - template: templates/megastore-message-queue-stage.yml
 
-- stage: prd
-  displayName: 'prd'
-  dependsOn: qa
-  condition: succeeded('qa')  
-  jobs:
-  - template: templates/output-environment-variables.yml    
-  - template: templates/megastore-message-queue-stage.yml
-    parameters:
-      job_name: ${{ 'deploy_to_prd_stage' }}     
+# - stage: prd
+#   displayName: 'prd'
+#   dependsOn: qa
+#   condition: succeeded('qa')  
+#   jobs:
+#   - template: templates/output-environment-variables.yml    
+#   - template: templates/megastore-message-queue-stage.yml
+#     parameters:
+#       job_name: ${{ 'deploy_to_prd_stage' }}     
