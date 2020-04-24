@@ -1,23 +1,20 @@
 parameters:
-  job_name: ''
   appinsights_instrumentationkey: ''
 
-jobs:
-  - job: ${{ parameters.job_name }}
-    steps:
-    - download: none    
-    - template: download-kubeconfig-file.yml
+steps:
+- download: none    
+- template: download-kubeconfig-file.yml
 
-    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/namespace-$SYSTEM_STAGENAME.yaml
-      displayName: 'configure namespace for stage'
+- script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/namespace-$SYSTEM_STAGENAME.yaml
+  displayName: 'configure namespace for stage'
 
-    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create secret docker-registry $ACR_AUTHENTICATION_SECRET_NAME --namespace=$SYSTEM_STAGENAME --docker-server=$ACR_NAME.azurecr.io --docker-username=$ACR_NAME --docker-password=$ACRPASSWORD_ENV --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
-      env:
-        ACRPASSWORD_ENV: $(acr_password)
-      displayName: 'add or update ACR credentials for namespace'
+- script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create secret docker-registry $ACR_AUTHENTICATION_SECRET_NAME --namespace=$SYSTEM_STAGENAME --docker-server=$ACR_NAME.azurecr.io --docker-username=$ACR_NAME --docker-password=$ACRPASSWORD_ENV --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
+  env:
+    ACRPASSWORD_ENV: $(acr_password)
+  displayName: 'add or update ACR credentials for namespace'
 
-    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create configmap message.queue --from-literal=MESSAGE_QUEUE_URL=nats://message-queue-service:4222 --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
-      displayName: 'add or update MESSAGE_QUEUE_URL configmap for namespace'
+- script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create configmap message.queue --from-literal=MESSAGE_QUEUE_URL=nats://message-queue-service:4222 --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
+  displayName: 'add or update MESSAGE_QUEUE_URL configmap for namespace'
 
-    - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create configmap appinsights.env --from-literal=APPINSIGHTS_INSTRUMENTATIONKEY=$APPINSIGHTS_INSTRUMENTATIONKEY --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
-      displayName: 'add or update APPINSIGHTS_INSTRUMENTATIONKEY configmap configmap for namespace'
+- script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create configmap appinsights.env --from-literal=APPINSIGHTS_INSTRUMENTATIONKEY=$APPINSIGHTS_INSTRUMENTATIONKEY --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
+  displayName: 'add or update APPINSIGHTS_INSTRUMENTATIONKEY configmap configmap for namespace'
