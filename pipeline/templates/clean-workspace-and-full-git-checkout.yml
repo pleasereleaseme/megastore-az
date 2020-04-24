@@ -1,0 +1,4 @@
+  jobs:
+  - job: clean_workspace_and_full_git_checkout
+    workspace:
+      clean: all

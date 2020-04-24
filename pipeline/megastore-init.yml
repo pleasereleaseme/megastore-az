@@ -14,7 +14,8 @@ stages:
 - stage: init
   displayName: init
   jobs:
-  - template: templates/clean-workspace.yml          
+  - template: templates/output-environent-variables.yml   
+  - template: templates/clean-workspace-and-full-git-checkout.yml          
   - template: templates/publish-and-download-k8s-artefact.yml          
 
 - stage: qa
@@ -23,6 +24,7 @@ stages:
   - name: appinsights_instrumentationkey
     value: $(appinsights_instrumentationkey_qa)
   jobs:
+  - template: templates/output-environent-variables.yml  
   - template: templates/megastore-init-stage.yml
     parameters:
       job_name: ${{ 'configure_stage_for_qa' }}    
@@ -34,6 +36,7 @@ stages:
   - name: appinsights_instrumentationkey
     value: $(appinsights_instrumentationkey_prd)
   jobs:
+  - template: templates/output-environent-variables.yml
   - template: templates/megastore-init-stage.yml
     parameters:
       job_name: ${{ 'configure_stage_for_prd' }}    

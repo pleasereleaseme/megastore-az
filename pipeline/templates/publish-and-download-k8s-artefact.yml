@@ -1,11 +1,9 @@
 jobs:
-  - job: publish_artefact_then_download
+  - job: publish_and_download_k8s_artefact
     variables:
     - name: k8s_artefact_name
       value: k8s-$(Build.BuildNumber)
     steps:
-    - template: output-variable-values.yml    
-
     - publish: $(System.DefaultWorkingDirectory)/k8s
       artifact: $(k8s_artefact_name)
       displayName: 'publish k8s artefact'

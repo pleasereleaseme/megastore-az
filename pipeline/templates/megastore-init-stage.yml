@@ -5,9 +5,6 @@ parameters:
 jobs:
   - job: ${{ parameters.job_name }}
     steps:
-
-    - template: output-variable-values.yml
-
     - template: download-kubeconfig-file.yml
 
     - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f $PIPELINE_WORKSPACE/k8s/namespace-$SYSTEM_STAGENAME.yaml
