@@ -29,22 +29,32 @@ stages:
   - name: appinsights_instrumentationkey
     value: $(appinsights_instrumentationkey_qa)
   jobs:
-  - job: configure_stage_for_qa
-    steps:
-    - template: templates/output-environment-variables.yml
-    - template: templates/megastore-init-stage.yml
-      parameters:
-        appinsights_instrumentationkey: $(appinsights_instrumentationkey)
+  - deployment: configure_stage_for_qa
+    displayName: configure_stage_for_qa
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: templates/output-environment-variables.yml
+          - template: templates/megastore-init-stage.yml
+            parameters:
+              appinsights_instrumentationkey: $(appinsights_instrumentationkey)
 
 - stage: prd
   displayName: prd
+  dependsOn: qa
+  condition: succeeded('qa')
   variables:
   - name: appinsights_instrumentationkey
     value: $(appinsights_instrumentationkey_prd)
   jobs:    
-  - job: configure_stage_for_prd
-    steps:
-    - template: templates/output-environment-variables.yml
-    - template: templates/megastore-init-stage.yml
-      parameters:
-        appinsights_instrumentationkey: $(appinsights_instrumentationkey)
+  - deployment: configure_stage_for_prd
+    displayName: configure_stage_for_prd
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: templates/output-environment-variables.yml
+          - template: templates/megastore-init-stage.yml
+            parameters:
+              appinsights_instrumentationkey: $(appinsights_instrumentationkey)
