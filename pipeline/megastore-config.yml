@@ -40,6 +40,7 @@ stages:
           - template: templates/megastore-config-stage.yml
             parameters:
               appinsights_instrumentationkey: $(appinsights_instrumentationkey)
+              db_password: $(db_password_prd)
 
 - stage: prd
   displayName: prd
@@ -60,3 +61,4 @@ stages:
           - template: templates/megastore-config-stage.yml
             parameters:
               appinsights_instrumentationkey: $(appinsights_instrumentationkey)
+              db_password: $(db_password_prd)
