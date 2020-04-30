@@ -20,4 +20,7 @@ steps:
 - script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create secret generic db.connection --from-literal=DB_CONNECTION_STRING="Server=tcp:$DB_SERVER_NAME.database.windows.net,1433;Initial Catalog=$SYSTEM_STAGENAME;Persist Security Info=False;User ID=sales_user_$SYSTEM_STAGENAME;Password=$DBPASSWORD_ENV;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
   env:
     DBPASSWORD_ENV: ${{parameters.db_password}}
-  displayName: 'add or update DB_CONNECTION_STRING for namespace'   
+  displayName: 'add or update DB_CONNECTION_STRING for namespace'
+
+- script: kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config create configmap aspnetcore.env --from-literal=ASPNETCORE_ENVIRONMENT=$SYSTEM_STAGENAME --namespace=$SYSTEM_STAGENAME --dry-run -o yaml |  kubectl --kubeconfig $AGENT_TEMPDIRECTORY/config apply -f -
+  displayName: 'add or update ASPNETCORE_ENVIRONMENT for namespace'
