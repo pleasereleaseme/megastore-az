@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using MegaStore.Web.Models;
 using MegaStore.Helper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 
 namespace MegaStore.Web.Controllers
 {
@@ -20,9 +22,17 @@ namespace MegaStore.Web.Controllers
 
         public IActionResult Index()
         {
+            TelemetryConfiguration configuration = new TelemetryConfiguration(Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY"));
+            TelemetryClient client = new TelemetryClient(configuration);
+
             CreateSale();
 
+            var newSaleMsg = $"New sale created at: {DateTime.Now} on host {Environment.MachineName}";
+            client.TrackTrace(newSaleMsg);
+            Console.WriteLine(newSaleMsg);
+
             ViewData["Env"] = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            
             return View();
         }
 
