@@ -14,21 +14,22 @@ namespace MegaStore.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private TelemetryClient _telemetryClient;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, TelemetryClient telemetryClient)
         {
             _logger = logger;
+            _telemetryClient = telemetryClient;
         }
 
         public IActionResult Index()
         {
-            TelemetryConfiguration configuration = new TelemetryConfiguration(Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY"));
-            TelemetryClient client = new TelemetryClient(configuration);
+            _telemetryClient.TrackEvent("Home Page Requested");
 
             CreateSale();
 
             var newSaleMsg = $"New sale created at: {DateTime.Now} on host {Environment.MachineName}";
-            client.TrackTrace(newSaleMsg);
+            _telemetryClient.TrackTrace(newSaleMsg);
             Console.WriteLine(newSaleMsg);
 
             ViewData["Env"] = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -66,7 +67,7 @@ namespace MegaStore.Web.Controllers
             MessageQueue.Publish(eventMessage);
         }
 
-        public string GetProduct()
+        private string GetProduct()
         {
             Random rnd = new Random();
             var products = new List<string> { "Otter Bitter", "Otter Amber", "Otter Bright", "Otter Ale", "Otter Head", "Tarka Pure", "Tarka Four", "Yellow Hammer", "Port Stout", "Firefly Bitter", "Stormstay Ale" };
