@@ -1,6 +1,7 @@
 ﻿using MegaStore.Helper;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.ApplicationInsights.WorkerService;
 using Microsoft.Extensions.DependencyInjection;
 using NATS.Client;
 using System;
@@ -12,19 +13,22 @@ namespace MegaStore.SaveSaleHandler
     class Program
     {
         private static ManualResetEvent _ResetEvent = new ManualResetEvent(false);
-        private static TelemetryConfiguration _configuration;
         private static TelemetryClient _telemetryClient;
 
         private const string QUEUE_GROUP = "save-sale-handler";
 
         static void Main()
         {
-            _configuration = TelemetryConfiguration.CreateDefault();
-            _configuration.InstrumentationKey = Env.AppInsightsInstrumentationKey;
-            _configuration.TelemetryInitializers.Add(new CloudRoleTelemetryInitializer());
-            _configuration.AddApplicationInsightsKubernetesEnricher();
+            IServiceCollection services = new ServiceCollection();
+            ApplicationInsightsServiceOptions aiOpts = new ApplicationInsightsServiceOptions();
+            aiOpts.EnableHeartbeat = true;
+            aiOpts.ConnectionString = Env.AppInsightsInstrumentationKey;
+            services.AddApplicationInsightsTelemetryWorkerService(aiOpts);
+            services.AddApplicationInsightsKubernetesEnricher();
+            services.AddSingleton<ITelemetryInitializer, CloudRoleTelemetryInitializer>();
 
-            _telemetryClient = new TelemetryClient(_configuration);
+            IServiceProvider serviceProvider = services.BuildServiceProvider();
+            _telemetryClient = serviceProvider.GetRequiredService<TelemetryClient>();
             
             try
             {

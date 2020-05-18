@@ -27,9 +27,9 @@ namespace MegaStore.Web
             aiOpts.EnableHeartbeat = true;
             services.AddApplicationInsightsTelemetry(aiOpts);
             services.AddApplicationInsightsKubernetesEnricher();
+            services.AddSingleton<ITelemetryInitializer, CloudRoleTelemetryInitializer>();
 
             services.AddMvc();
-            services.AddSingleton<ITelemetryInitializer, CloudRoleTelemetryInitializer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
