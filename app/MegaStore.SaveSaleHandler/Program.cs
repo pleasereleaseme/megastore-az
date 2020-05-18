@@ -20,11 +20,6 @@ namespace MegaStore.SaveSaleHandler
         static void Main()
         {
             IServiceCollection services = new ServiceCollection();
-/*            var aiOpts = new ApplicationInsightsServiceOptions
-            {
-                EnableHeartbeat = true,
-                ConnectionString = Env.AppInsightsInstrumentationKey
-            };*/
             services.AddApplicationInsightsTelemetryWorkerService(Env.AppInsightsInstrumentationKey);
             services.AddApplicationInsightsKubernetesEnricher();
             services.AddSingleton<ITelemetryInitializer, CloudRoleTelemetryInitializer>();

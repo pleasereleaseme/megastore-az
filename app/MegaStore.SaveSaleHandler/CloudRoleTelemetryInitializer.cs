@@ -8,7 +8,6 @@ namespace MegaStore.SaveSaleHandler
         public void Initialize(ITelemetry telemetry)
         {
             telemetry.Context.Cloud.RoleName = "MegaStore.SaveSaleHandler";
-            telemetry.Context.Cloud.RoleInstance = "Custom RoleInstance";
         }
 
     }

@@ -8,7 +8,6 @@ namespace MegaStore.Web
         public void Initialize(ITelemetry telemetry)
         {
             telemetry.Context.Cloud.RoleName = "MegaStore.Web";
-            telemetry.Context.Cloud.RoleInstance = "Custom RoleInstance";
         }
     }
 }
