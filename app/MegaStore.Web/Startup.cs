@@ -22,9 +22,11 @@ namespace MegaStore.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            
-            ApplicationInsightsServiceOptions aiOpts = new ApplicationInsightsServiceOptions();
-            aiOpts.EnableHeartbeat = true;
+
+            var aiOpts = new ApplicationInsightsServiceOptions
+            {
+                EnableHeartbeat = true
+            };
             services.AddApplicationInsightsTelemetry(aiOpts);
             services.AddApplicationInsightsKubernetesEnricher();
             services.AddSingleton<ITelemetryInitializer, CloudRoleTelemetryInitializer>();

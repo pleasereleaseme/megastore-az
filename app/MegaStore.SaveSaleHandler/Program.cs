@@ -20,14 +20,17 @@ namespace MegaStore.SaveSaleHandler
         static void Main()
         {
             IServiceCollection services = new ServiceCollection();
-            ApplicationInsightsServiceOptions aiOpts = new ApplicationInsightsServiceOptions();
-            aiOpts.EnableHeartbeat = true;
-            aiOpts.ConnectionString = Env.AppInsightsInstrumentationKey;
-            services.AddApplicationInsightsTelemetryWorkerService(aiOpts);
+/*            var aiOpts = new ApplicationInsightsServiceOptions
+            {
+                EnableHeartbeat = true,
+                ConnectionString = Env.AppInsightsInstrumentationKey
+            };*/
+            services.AddApplicationInsightsTelemetryWorkerService(Env.AppInsightsInstrumentationKey);
             services.AddApplicationInsightsKubernetesEnricher();
             services.AddSingleton<ITelemetryInitializer, CloudRoleTelemetryInitializer>();
 
             IServiceProvider serviceProvider = services.BuildServiceProvider();
+
             _telemetryClient = serviceProvider.GetRequiredService<TelemetryClient>();
             
             try
